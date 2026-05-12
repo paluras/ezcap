@@ -23,7 +23,7 @@ func main() {
 		}
 	case "ios":
 
-		cmd := exec.Command("xcrun", "simctl", "screenshot", "screenshot_simulator.png")
+		cmd := exec.Command("xcrun", "simctl", "io", "booted", "screenshot", "screenshot_simulator.png")
 		err := cmd.Run()
 		if err != nil {
 			fmt.Println("error", err)
