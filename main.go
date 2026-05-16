@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/exec"
 )
 
 func main() {
@@ -14,33 +13,14 @@ func main() {
 
 	switch os.Args[1] {
 	case "screen":
-
-		cmd := exec.Command("screencapture", "-x", "screenshot.png")
-		err := cmd.Run()
-		if err != nil {
-			fmt.Println("error", err)
-			os.Exit(1)
-		}
+		captureScreen("screenshot.png")
+		printPath("screenshot.png")
 	case "ios":
+		captureIOS("screenshoot_ios.png")
+		printPath("screenshoot_ios.png")
 
-		cmd := exec.Command("xcrun", "simctl", "io", "booted", "screenshot", "screenshot_simulator.png")
-		err := cmd.Run()
-		if err != nil {
-			fmt.Println("error", err)
-			os.Exit(1)
-
-		}
 	case "android":
-		cmd := exec.Command("adb", "exec-out", "screencap", "-p")
-		output, err := cmd.Output()
-		if err != nil {
-			fmt.Println("error", err)
-			os.Exit(1)
-		}
-		err = os.WriteFile("screenshot_android.png", output, 0644)
-		if err != nil {
-			fmt.Println("error writing file:", err)
-			os.Exit(1)
-		}
+		captureAndroid("screenshot_android.png")
+		printPath("screenshot_android.png")
 	}
 }
